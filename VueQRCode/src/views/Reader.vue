@@ -23,6 +23,9 @@
 </template>
 
 <script>
+
+// https://www.npmjs.com/package/jsqr
+// https://www.npmjs.com/package/jimp
 import jsQR from "jsqr";
 import Jimp from "jimp";
 

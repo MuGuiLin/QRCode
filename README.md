@@ -8,5 +8,10 @@ GitHub：[https://github.com/MuGuiLin/QRCode](https://github.com/MuGuiLin/QRCode
 
 
 
-### Vue.js版 实例效果：
+### Vue.js版 Demo实例效果：
 
+![二维生成](https://raw.githubusercontent.com/MuGuiLin/QRCode/master/VueQRCode/src/assets/create.png)
+
+------
+
+![二维生成](https://raw.githubusercontent.com/MuGuiLin/QRCode/master/VueQRCode/src/assets/qrcode.png)
