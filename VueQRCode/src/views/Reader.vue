@@ -31,8 +31,8 @@ export default {
   data() {
     return {
       result: "https://github.com/MuGuiLin",
-      imgurl: "https://raw.githubusercontent.com/MuGuiLin/QRCode/main/HtmlQRCode/img/github.com.png",
-      imgurl2: "https://raw.githubusercontent.com/MuGuiLin/QRCode/main/HtmlQRCode/img/github.com.png",
+      imgurl: "https://raw.githubusercontent.com/MuGuiLin/QRCode/master/VueQRCode/src/assets/github.com.png",
+      imgurl2: "https://raw.githubusercontent.com/MuGuiLin/QRCode/master/VueQRCode/src/assets/github.com.png",
     };
   },
   methods: {

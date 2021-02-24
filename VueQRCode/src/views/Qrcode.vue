@@ -50,17 +50,16 @@ export default {
   data() {
     return {
       href: "",
-      text: "https://github.com/MuGuiLin", // 二维码内容
-      size: 360, // 二维码宽高尺寸, 长宽一致, 包含外边距
-      bgSrc: "", // 嵌入背景图地址，
-      logoSrc:
-        "https://imgcdn.toutiaoyule.com/20210222/20210222144101270618a_t.jpeg", // 嵌入至二维码中心的 LOGO 地址
-      margin: 0, // 二维码图像的外边距, 默认 20px
-      colorDark: "blue", // 实点的颜色
-      colorLight: "#42B983", // 空白区的颜色
-      backgroundColor: "#EEE", // 背景色
-      logoScale: 0.15, // 中间图的尺寸，不要设太大，太大会导致扫码失败的 默认 0.2
-      dotScale: "", //那些小点点的大小，数据区域点缩小比例,默认为0.35
+      text: "https://github.com/MuGuiLin",  // 二维码内容
+      size: 360,                            // 二维码宽高尺寸, 长宽一致, 包含外边距
+      bgSrc: "",                            // 嵌入背景图地址，
+      logoSrc: "https://raw.githubusercontent.com/MuGuiLin/QRCode/master/VueQRCode/src/assets/logo.png", // 嵌入至二维码中心的 LOGO 地址
+      margin: 0,                            // 二维码图像的外边距, 默认20px
+      colorDark: "blue",                    // 实点的颜色
+      colorLight: "#42B983",                // 空白区的颜色
+      backgroundColor: "#EEE",              // 背景色
+      logoScale: 0.15,                      // 中间图的尺寸，不要设太大，太大会导致扫码失败的 默认0.2
+      dotScale: 0.35,                       // 数据区域点缩小比例,默认为0.35
     };
   },
   methods: {
