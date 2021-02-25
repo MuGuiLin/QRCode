@@ -10,10 +10,47 @@
 </head>
 
 <body>
-    <h1 class="h1">纯前端 JS ：二维码：生成、扫描、识别 (HTML版)</h1>
+    <h2 class="h2">纯前端 JS ：二维码：生成、扫描、识别 (HTML版)</h2>
     <hr />
-    
+
+    <main class="reader">
+        <button class="sweep" onclick="sweep()">扫一扫</button>
+        <button class="sweep">
+            <input type="file" id="file" onchange="upload()" />从相册选择
+        </button>
+        <div class="imgurl">
+            <img id="imgurl" src="https://raw.githubusercontent.com/MuGuiLin/QRCode/master/VueQRCode/src/assets/github.com.png" alt="当前识别的二维码" />
+        </div>
+        <textarea class="result" id="result" cols="32" rows="6" placeholder="二维码识别结果！"></textarea>
+    </main>
+
+    <canvas class="canvas" id="canvas"></canvas>
+
+    <script src="./js/jimp.js"></script>
+    <script src="./js/jsqr.js"></script>
     <script src="./js/base.js"></script>
+
+    <script>
+        const QrCode = new QrCodeRecognition({
+            id: '#canvas',
+            seuccess: function (res) {
+                document.querySelector('#result').value = res.data;
+            },
+            error: function (err) {
+                document.querySelector('#result').value = err;
+                console.error(err);
+            }
+        });
+
+        function sweep() {
+            QrCode.init();
+        }
+
+        function upload() {
+            QrCode.upload();
+        }
+
+    </script>
 </body>
 
 </html>
