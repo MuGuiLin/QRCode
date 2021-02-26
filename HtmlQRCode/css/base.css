@@ -3,28 +3,36 @@
     padding: 0;
 }
 
-.h2 {
+.h1 {
+    padding: 10px;
+    text-align: center;
+}
+.menu{
     text-align: center;
 }
 
-.reader {
+.menu nav{
+    display: inline-block;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.menu nav.active{
+    color: #42b983;
+}
+
+
+.main{
+
+}
+
+.main .reader {
     text-align: center;
     font-size: 16px;
 }
 
-.canvas {
-    display   : none;
-    box-sizing: border-box;
-    position  : fixed;
-    top       : 0;
-    right     : 0;
-    bottom    : 0;
-    left      : 0;
-    width     : 100vw;
-    height    : 100vh;
-}
-
-.reader .sweep {
+.main .reader .sweep {
     position  : relative;
     margin    : 20px;
     padding   : 12px;
@@ -37,18 +45,18 @@
     overflow  : hidden;
 }
 
-.reader .sweep input {
+.main .reader .sweep input {
     position : absolute;
     font-size: 100px;
     opacity  : 0;
 }
 
-.reader .imgurl {
+.main .reader .imgurl {
     margin    : 20px;
     text-align: center;
 }
 
-.reader .imgurl img {
+.main .reader .imgurl img {
     margin       : 20px;
     padding      : 10px;
     border       : 1px solid gray;
@@ -57,10 +65,22 @@
     height       : 260px;
 }
 
-.reader .result {
+.main .reader .result {
     box-sizing   : border-box;
     padding      : 10px;
     border       : 1px solid gray;
     border-radius: 8px;
     font-size    : 16px;
+}
+
+.canvas {
+    display   : none;
+    box-sizing: border-box;
+    position  : fixed;
+    top       : 0;
+    right     : 0;
+    bottom    : 0;
+    left      : 0;
+    width     : 100vw;
+    height    : 100vh;
 }
