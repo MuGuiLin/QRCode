@@ -1,7 +1,5 @@
 # QRCode
 
-GitHub：[https://github.com/MuGuiLin/QRCode](https://github.com/MuGuiLin/QRCode)
-
 ### 纯前端 HTML / Vue ：二维码：生成、扫描、识别、解析、扫一扫
 
 ### Demo：[https://muguilin.github.io/QRCode](https://muguilin.github.io/QRCode)

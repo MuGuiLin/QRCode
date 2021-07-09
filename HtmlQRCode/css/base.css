@@ -40,9 +40,8 @@
     padding  : 12px;
     width    : 300px;
     font-size: 18px;
-
-    border  : 1px solid #42b983;
-    overflow: hidden;
+    border   : 1px solid #42b983;
+    overflow : hidden;
 }
 
 .main .create input[type="button"] {
