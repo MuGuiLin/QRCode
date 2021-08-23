@@ -66,6 +66,14 @@ export default {
       this.canvas.stroke();
     },
 
+    cance() {
+        this.isAnimation = false;
+        cancelAnimationFrame(this.timer);
+        setTimeout(() => {
+          this.cvsele.style.display = "none";
+        }, 1000);
+    },
+
     sweep() {
       if (this.video.readyState === this.video.HAVE_ENOUGH_DATA) {
         const { videoWidth, videoHeight } = this.video;
@@ -87,12 +95,8 @@ export default {
             if (this.result != obj.data) {
               this.audio.play();
               this.result = obj.data;
-              this.isAnimation = false;
-              cancelAnimationFrame(this.timer);
+              this.cance();
               console.info("识别结果：", obj.data);
-              setTimeout(() => {
-                this.cvsele.style.display = "none";
-              }, 1000);
             }
           } else {
             console.error("识别失败，请检查二维码是否正确！");
@@ -111,36 +115,27 @@ export default {
     media() {
       this.isAnimation = true;
       this.cvsele.style.display = "block";
-      navigator.getUserMedia =
-        navigator.getUserMedia ||
-        navigator.webkitGetUserMedia ||
-        navigator.mozGetUserMedia ||
-        navigator.msGetUserMedia;
+      navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
       if (navigator.mediaDevices) {
-        navigator.mediaDevices
-          .getUserMedia({
-            video: { facingMode: "environment" },
-          })
-          .then((stream) => {
-            this.video.srcObject = stream;
-            this.video.setAttribute("playsinline", true);
-            this.video.setAttribute("webkit-playsinline", true);
-            this.video.addEventListener("loadedmetadata", () => {
-              this.video.play();
-              this.sweep();
-            });
-          })
-          .catch((error) => {
-            console.error(
-              error.name + "：" + error.message + "，" + error.constraint
-            );
+        navigator.mediaDevices.getUserMedia({
+          video: { facingMode: "environment" },
+        }).then((stream) => {
+          this.video.srcObject = stream;
+          this.video.setAttribute("playsinline", true);
+          this.video.setAttribute("webkit-playsinline", true);
+          this.video.addEventListener("loadedmetadata", () => {
+            this.video.play();
+            this.sweep();
           });
+        }).catch((error) => {
+          this.cance();
+          alert('对不起：未识别到扫描设备!');
+          console.log(error.code + "：" + error.name + "，" + error.message);
+        });
       } else if (navigator.getUserMedia) {
-        navigator.getUserMedia(
-          {
+        navigator.getUserMedia({
             video: { facingMode: "environment" },
-          },
-          (stream) => {
+          }, (stream) => {
             this.video.srcObject = stream;
             this.video.setAttribute("playsinline", true);
             this.video.setAttribute("webkit-playsinline", true);
@@ -148,58 +143,48 @@ export default {
               this.video.play();
               this.sweep();
             });
-          },
-          (error) => {
-            console.error(
-              error.name + "：" + error.message + "，" + error.constraint
-            );
+          }, (error) => {
+            this.cance();
+            alert('对不起：未识别到扫描设备!');
+            console.log(error.code + "：" + error.name + "，" + error.message);
           }
         );
       } else {
-        if (
-          navigator.userAgent.toLowerCase().match(/chrome/) &&
-          location.origin.indexOf("https://") < 0
-        ) {
-          console.error(
-            "获取浏览器录音功能，因安全性问题，需要在localhost 或 127.0.0.1 或 https 下才能获取权限！"
-          );
+        if (navigator.userAgent.toLowerCase().match(/chrome/) && location.origin.indexOf("https://") < 0 ) {
+          console.log("获取浏览器录音功能，因安全性问题，需要在localhost 或 127.0.0.1 或 https 下才能获取权限！");
         } else {
+          this.cance();
           alert("对不起：未识别到扫描设备!");
         }
       }
     },
 
     upload(e) {
+      this.cance();
       const file = e.target.files[0];
-      const createObjectURL =
-        window.createObjectURL ||
-        window.URL.createObjectURL ||
-        window.webkitURL.createObjectUR;
+      const createObjectURL = window.createObjectURL ||  window.URL.createObjectURL || window.webkitURL.createObjectUR;
       this.result = "";
       this.imgurl = createObjectURL(file);
 
       const fReader = new FileReader();
-      fReader.readAsDataURL(file); // Base64 8Bit字节码
+      fReader.readAsDataURL(file);          // Base64 8Bit字节码
       // fReader.readAsBinaryString(file);  // Binary 原始二进制
       // fReader.readAsArrayBuffer(file);   // ArrayBuffer 文件流
       fReader.onload = (e) => {
         this.imgurl2 = e.target.result;
         e.target.result && Jimp.read(e.target.result).then(async (res) => {
-            const { data, width, height } = res.bitmap;
-            try {
-              const resolve = await jsQR(data, width, height);
-              this.result = resolve.data;
-              console.info("识别结果：", resolve.data);
-            } catch (err) {
-              this.result = "识别失败，请检查二维码是否正确！";
-              console.error("识别失败，请检查二维码是否正确！", err);
-            } finally {
-              console.info("读取到的文件：", res);
-            }
-          })
-          .catch((err) => {
-            console.error("文件读取错误：", err);
-          });
+          const { data, width, height } = res.bitmap;
+          try {
+            const resolve = await jsQR(data, width, height);
+            this.result = resolve.data;
+          } catch (err) {
+            this.result = "识别失败，请检查二维码是否正确！";
+          } finally {
+            console.info("读取到的文件：", res);
+          }
+        }).catch((err) => {
+          console.error("文件读取错误：", err);
+        });
       };
     },
   },

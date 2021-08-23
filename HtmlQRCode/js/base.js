@@ -97,7 +97,7 @@
                 }).catch(error => {
                     this.cance();
                     alert('对不起：未识别到扫描设备!');
-                    // console.error(error.name + "：" + error.message + "，" + error.constraint);
+                    // console.error(error.code + "：" + error.name + "，" + error.message);
                 });
             } else if (navigator.getUserMedia) {
                 navigator.getUserMedia({
@@ -113,7 +113,7 @@
                 }, (error) => {
                     this.cance();
                     alert('对不起：未识别到扫描设备!');
-                    // console.error(error.name + "：" + error.message + "，" + error.constraint);
+                    // console.error(error.code + "：" + error.name + "，" + error.message);
                 });
             } else {
                 if (navigator.userAgent.toLowerCase().match(/chrome/) && location.origin.indexOf('https://') < 0) {
