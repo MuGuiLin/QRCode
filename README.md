@@ -26,7 +26,7 @@
 
 ### Vue.js版 Demo实例效果：
 
-![二维码生成](https://raw.githubusercontent.com/MuGuiLin/QRCode/master/VueQRCode/src/assets/create.png)
+![二维码生成](https://raw.githubusercontent.com/MuGuiLin/QRCode/master/Vue3QRCode/src/assets/create.png)
 
 ------
 
