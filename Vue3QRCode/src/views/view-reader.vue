@@ -176,7 +176,7 @@ export default defineComponent({
     margin: 10px auto;
     padding: 10px;
     width: 80%;
-    min-height: 128px;
+    min-height: 180px;
     font-size: 22px;
     border-radius: 6px;
     border: 1px solid gray;
