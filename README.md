@@ -24,9 +24,9 @@
 
 
 
-### Vue.js版 Demo实例效果：
+### Vue3.js版 Demo实例效果：
 
-![二维码生成](https://raw.githubusercontent.com/MuGuiLin/QRCode/master/Vue3QRCode/src/assets/create.png)
+![二维码生成](https://img-blog.csdnimg.cn/64afbdb1330d4cbb9e86edbbb7f3c810.png#pic_center)
 
 
 ------
