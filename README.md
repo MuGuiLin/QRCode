@@ -4,13 +4,17 @@
 >
 > **核心功能**：动态生成 | 实时扫描 | 图片识别解析 | 跨平台支持
 
-[🚀 在线演示 Demo](https://muguilin.github.io/QRcode) | [📂 GitHub 仓库](https://github.com/MuGuiLin/QRCode)
+[🚀 在线演示 Demo](https://muguilin.github.io/QRcode) |[🚀 在线演示2 Demo](http://demo.muguilin.com/qrcode)  [📂 GitHub 仓库](https://github.com/MuGuiLin/QRCode)
 
 ---
+
+
 
 ## ✨ 项目简介
 
 本项目是一个轻量级、无依赖的纯前端二维码工具库，提供 **HTML 原生版** 和 **Vue 版**（兼容 Vue2 & Vue3）两种实现方式。
+
+
 
 ### 🚀 核心优势
 
@@ -23,21 +27,25 @@
 
 ---
 
+
+
 ## 📸 效果预览
 
 ### 1. 二维码生成
 将任意文本或 URL 快速转换为二维码图像。
 ![二维码生成效果](http://demo.muguilin.com/qrcode/create-qrcode.png)
 
-### 2. 图片识别解析
+### 2. 二维码识别
 上传包含二维码的图片，自动解析其中内容。
 ![二维码识别效果](http://demo.muguilin.com/qrcode/qrcode-qrcode.png)
 
-### 3. 实时扫码
+### 3. 二维码扫描
 调用设备摄像头，实时捕获并解析二维码。
 ![二维码扫描效果](http://demo.muguilin.com/qrcode/scan-qrcode.png)
 
 ---
+
+
 
 ## 🛠️ 技术栈
 
@@ -47,13 +55,18 @@
 
 ---
 
-## 📦 快速开始
 
-*(此处建议补充简单的安装或使用代码片段，例如：)*
 
-### HTML 版本
-```html
-<!-- 引入脚本 -->
-<script src="./qrcode.min.js"></script>
-<!-- 使用示例 -->
-<div id="qrcode"></div>
+## ☕ 支持作者
+
+开源不易，如果内容不错，欢迎 Star ⭐ 支持！
+
+如果这个项目对你有所帮助，可以请我喝杯咖啡哦，您的鼓励是我持续更新迭代的最大动力！感谢支持！
+
+|      |                       支付宝                       |      |                      微信支付                       |      |
+| ---- | :------------------------------------------------: | ---- | :-------------------------------------------------: | ---- |
+|      | ![支付宝](http://demo.muguilin.com/zfb-qrcode.png) |      | ![微信支付](http://demo.muguilin.com/wx-qrcode.png) |      |
+|      |                                                    |      |                                                     |      |
+
+------
+

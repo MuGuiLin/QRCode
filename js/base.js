@@ -222,7 +222,7 @@
                 this.cance();
 
                 if (location.protocol !== "https:" && location.hostname !== "localhost" && location.hostname !== "127.0.0.1") {
-                    this.error("摄像头需要在 localhost 或 127.0.0.1 或部署的 Apache、Nginx、IIS等Web服务器环境下使用。");
+                    this.error("摄像头需要在 localhost 或 127.0.0.1 或部署 HTTPS协议的 Apache、Nginx、IIS等Web服务器环境下使用。");
                     return;
                 }
 
