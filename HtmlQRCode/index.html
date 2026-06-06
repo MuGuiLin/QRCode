@@ -1,63 +1,207 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="MuGuiLin, 沐枫, https://github.com/MuGuiLin" />
+    <meta name="keywords" content="MuGuiLin, 沐枫, 前端, Web前端, Web全栈, 人工智能, 前端工程师, AI应用开发、网站开发, Ai Agent搭建, H5开发, Ai智能体开发、 APP开发, 小程序, Python, LangChain" />
     <title>二维码：生成、扫描、识别</title>
     <link rel="stylesheet" href="./css/base.css" />
-	<script src="https://hm.baidu.com/hm.js?29d14c9fb6158fcbec79d1a0d1425404"></script>
+    <script src="https://hm.baidu.com/hm.js?29d14c9fb6158fcbec79d1a0d1425404"></script>
 </head>
 
 <body>
-    <menu class="menu" id="menu">
-        <nav class="active">二维码生成</nav> |
-        <nav>二维码识别</nav>
-    </menu>
-
-    <h1 class="h1">纯前端 JS ：二维码：生成、扫描、识别 (HTML版)</h1>
-    <hr />
-
-    <main class="main">
-        <aside class="create">
-            <input type="text" id="code" value="http://www.muguilin.com" placeholder="请在这里输入要生成的内容！" />
-            <input type="button" value="生成" onclick="create()" />
-            <div class="qrcode" id="qrcode"></div>
-        </aside>
-        <aside class="reader">
-            <button class="sweep" onclick="sweep()">扫一扫</button>
-            <button class="sweep">
-                <input type="file" id="file" onchange="upload()" />从相册选择
-            </button>
-            <div class="imgurl">
-                <img id="imgurl"
-                    src="https://raw.githubusercontent.com/MuGuiLin/QRCode/master/VueQRCode/src/assets/github.com.png"
-                    alt="当前识别的二维码" />
+    <div class="page-shell">
+        <header class="hero">
+            <div class="hero__content">
+                <p class="eyebrow">纯Web 前端 JS 工具</p>
+                <h1>二维码生成与识别</h1>
+                <p class="hero__desc">输入网址、文本或联系方式，即可生成清晰二维码；也可以扫描或上传图片识别内容。</p>
             </div>
-            <textarea class="result" id="result" cols="32" rows="6" placeholder="二维码识别结果！"></textarea>
-            <canvas class="canvas" id="canvas"></canvas>
-        </aside>
-    </main>
+        </header>
+
+        <menu class="menu" id="menu" aria-label="QR code mode switch">
+            <nav class="active">生成二维码</nav>
+            <nav>识别二维码</nav>
+        </menu>
+
+        <main class="main">
+            <aside class="create panel">
+                <div class="panel__header">
+                    <p class="panel__label">Create</p>
+                    <h2>生成二维码</h2>
+                    <p>将内容填入下方，点击按钮后即时生成，适合网址、短文本、联系方式等。</p>
+                </div>
+
+                <div class="form-row">
+                    <input type="text" id="code" value="http://www.muguilin.com" placeholder="请输入要生成二维码的内容!" />
+                    <input type="button" value="立即生成" id="create" />
+                    <input type="button" value="点击下载" id="download" />
+                </div>
+
+                <div class="qrcode-wrap">
+                    <div class="qrcode" id="qrcode"></div>
+                </div>
+            </aside>
+
+            <aside class="reader panel">
+                <div class="panel__header">
+                    <p class="panel__label">Reader</p>
+                    <h2>识别二维码</h2>
+                    <p>可以打开摄像头直接扫描，也可以从本地选择二维码图片。</p>
+                </div>
+
+                <div class="actions">
+                    <button class="sweep" onclick="sweep()">扫一扫</button>
+                    <button class="sweep sweep--file">
+                        <input type="file" id="file" onchange="upload()" accept="image/*" />从相册选择
+                    </button>
+                </div>
+                <p class="reader-status" id="readerStatus" aria-live="polite"></p>
+
+                <div class="reader-grid">
+                    <div class="imgurl">
+                        <img id="imgurl" src="http://demo.muguilin.com/qrcode/muguilin-qrcode.png"
+                            alt="Current QR code image" />
+                    </div>
+                    <textarea class="result" id="result" cols="32" rows="6" placeholder="二维码识别结果会显示在这里!"></textarea>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <div class="scan-layer" id="scanLayer" aria-hidden="true">
+        <canvas class="canvas" id="canvas"></canvas>
+        <div class="scan-panel">
+            <div class="scan-tools">
+                <button type="button" class="scan-tool" id="torchToggle">开启闪光灯</button>
+                <button type="button" class="scan-tool" id="cameraSwitch">切换摄像头</button>
+            </div>
+            <div class="scan-frame">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <i></i>
+            </div>
+            <p id="scanStatus">请将二维码放入取景框内</p>
+            <button type="button" class="scan-close" id="scanClose">退出扫描</button>
+        </div>
+    </div>
 
     <!-- 二维码生成 -->
-    <script src="./js/qrcode.js"></script>
+    <script src="./js/qrcode.min.js"></script>
     <script>
-        const text = document.querySelector('#code');
-        const qrcode = new QRCode(document.querySelector('#qrcode'), {
-            text: "http://www.muguilin.com",
+        // 1. 获取DOM元素
+        const textInput = document.querySelector('#code');
+        const generateBtn = document.querySelector('#create');
+        const downloadBtn = document.querySelector('#download');
+
+        // 2. 提取配置，便于维护
+        const qrConfig = {
             width: 300,
             height: 300,
-            colorDark: "blue",
-            colorLight: "white",
-            correctLevel: QRCode.CorrectLevel.H
-        });
-
-        // 生成
-        function create() {
-            qrcode.clear();
-            qrcode.makeCode(text.value);
+            data: textInput.value || "http://www.muguilin.com",
+            qrOptions: {
+                typeNumber: "0",
+                mode: "Byte",
+                errorCorrectionLevel: "Q"
+            },
+            dotsOptions: {
+                type: "extra-rounded",
+                color: "#6a1a4c",
+                roundSize: true,
+                gradient: {
+                    type: "linear",
+                    rotation: 0,
+                    colorStops: [
+                        { offset: 0, color: "#fa01ea" },
+                        { offset: 1, color: "#0161fe" }
+                    ]
+                }
+            },
+            cornersSquareOptions: {
+                type: "extra-rounded",
+                color: "#1858fc"
+            },
+            cornersDotOptions: {
+                type: "",
+                color: "#e213ec"
+            },
+            // 建议添加背景选项，避免透明背景在某些查看器中显示异常
+            backgroundOptions: {
+                color: "#ffffff",
+            }
         };
+
+        // 3. 初始化实例
+        const qrCode = new QRCodeStyling(qrConfig);
+
+        // 只 append 一次
+        qrCode.append(document.getElementById("qrcode"));
+
+        // 4. 优化后的生成函数
+        async function create() {
+            const content = textInput.value.trim();
+
+            if (!content) {
+                alert("请输入要生成二维码的内容!");
+                return;
+            }
+
+            // UI 反馈：禁用按钮，防止重复点击
+            const originalText = generateBtn.value;
+            generateBtn.disabled = true;
+            generateBtn.value = "生成中...";
+
+            try {
+                // 更新二维码数据
+                await qrCode.update({
+                    data: content
+                });
+
+            } catch (error) {
+                console.error("二维码生成失败:", error);
+                alert("生成失败，请重试");
+            } finally {
+                // 恢复按钮状态
+                generateBtn.disabled = false;
+                generateBtn.value = originalText;
+            }
+        }
+
+        // 5. 优化后的下载函数
+        async function download() {
+            const content = textInput.value.trim();
+            if (!content) {
+                alert("暂无内容可下载");
+                return;
+            }
+
+            // 获取预览图 URL (可选，如果你需要 img 标签显示),  注意：getRawData 返回的是 Blob，需要转换为 URL
+            // const blob = await qrCode.getRawData('png');
+            // if (blob) {
+            //     URL.createObjectURL(blob);
+            // }
+
+            console.log("二维码生成成功");
+            // 使用更友好的文件名
+            qrCode.download({
+                name: `qrcode_${Date.now()}`,
+                extension: "png"
+            });
+        }
+
+        // 监听回车键生成
+        textInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                create();
+            }
+        });
+        generateBtn.addEventListener('click', create);
+        downloadBtn.addEventListener('click', download);
     </script>
 
     <!-- 二维码识别 -->
@@ -66,33 +210,44 @@
     <script src="./js/base.js"></script>
     <script>
         const result = document.querySelector('#result');
+        const readerStatus = document.querySelector('#readerStatus');
+        const scanStatus = document.querySelector('#scanStatus');
         const QrCode = new QrCodeRecognition({
             sweepId: '#canvas',
             uploadId: '#file',
+            layerId: '#scanLayer',
+            closeId: '#scanClose',
+            torchId: '#torchToggle',
+            switchId: '#cameraSwitch',
+            previewId: '#imgurl',
+            status: function (text) {
+                readerStatus.textContent = text;
+                scanStatus.textContent = text || '请将二维码放入取景框内';
+            },
             error: function (err) {
-                // 识别错误反馈
                 result.value = err;
             },
             seuccess: function (res) {
-                // 识别成功反馈
                 result.value = res.data;
             }
         });
 
-        // 扫一扫
         function sweep() {
             result.value = '';
             QrCode.sweep();
         };
 
-        // 从相册选择
         function upload() {
             result.value = '';
             QrCode.upload();
         };
+
+        window.addEventListener('beforeunload', function () {
+            QrCode.destroy();
+        });
     </script>
 
-    <!-- Demo页面交互 -->
+    <!-- Demo页面切换交互 -->
     <script>
         const menu = [...document.querySelectorAll('nav')];
         const aside = [...document.querySelectorAll('aside')];
